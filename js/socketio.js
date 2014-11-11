@@ -16,6 +16,7 @@ socket.on("quote", function(msg)
   {
     bid = parseFloat(bid).toFixed(2);
     $("#"+symbol+"-bid").text(bid);
+    bid = parseFloat(bid);
   }
   else
   {
@@ -29,10 +30,11 @@ socket.on("quote", function(msg)
   {
     ask = parseFloat(ask).toFixed(2);
     $("#"+symbol+"-ask").text(ask);
+    ask = parseFloat(ask);
   }
   else
   {
     ask = parseFloat($("#"+symbol+"-ask").text());
   }
-  $("#"+symbol+"-value").text(((ask-bid)/2+bid).toFixed(2));
+  $("#"+symbol+"-value").text(((ask-bid)/2.0+bid).toFixed(2));
 });
