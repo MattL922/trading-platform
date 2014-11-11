@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Options trading platform">
+    <meta name="author" content="Matt Loppatto">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Tradeking Options Trader</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <form class="form-inline" role="form">
+            <input type="text"  class="form-control input-sm" id="update-symbol" placeholder="Symbol">
+            <input type="text"  class="form-control input-sm" id="update-lower-strike" placeholder="Lower strike">
+            <input type="text" class="form-control input-sm" id="update-upper-strike" placeholder="Upper strike">
+            <select class="form-control input-sm" id="update-expiration">
+              <!--<option value="20141107">7 Nov 2014</option>
+              <option value="20141114">14 Nov 2014</option>
+              <option value="20141121">21 Nov 2014</option>
+              <option value="20141128">28 Nov 2014</option>-->
+            </select>
+            <button type="button" class="btn btn-default btn-sm" id="update-option-chain">Update</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <!-- Option Chain -->
+        <div class="col-lg-6 col-md-6 text-center">
+          <strong>Option Chain</strong>
+          <table class="table table-bordered table-condensed" id="option-chain">
+            <tr>
+              <th colspan="5" class="text-center small">Calls</th>
+              <th></th>
+              <th colspan="5" class="text-center small">Puts</th>
+            </tr>
+            <tr>
+              <th class="text-center small">B#</th>
+              <th class="text-center small">B$</th>
+              <th class="text-center small">$</th>
+              <th class="text-center small">A$</th>
+              <th class="text-center small">A#</th>
+              <th class="text-center small">Strike</th>
+              <th class="text-center small">B#</th>
+              <th class="text-center small">B$</th>
+              <th class="text-center small">$</th>
+              <th class="text-center small">A$</th>
+              <th class="text-center small">A#</th>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+    </div><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/tradeking.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/socketio.js"></script>
+  </body>
+</html>
+
