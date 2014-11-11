@@ -14,8 +14,8 @@ socket.on("quote", function(msg)
   }
   if(bid !== undefined)
   {
+    bid = parseFloat(bid).toFixed(2);
     $("#"+symbol+"-bid").text(bid);
-    bid = parseFloat(bid);
   }
   else
   {
@@ -27,8 +27,8 @@ socket.on("quote", function(msg)
   }
   if(ask !== undefined)
   {
+    ask = parseFloat(ask).toFixed(2);
     $("#"+symbol+"-ask").text(ask);
-    ask = parseFloat(ask);
   }
   else
   {
