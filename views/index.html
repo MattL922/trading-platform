@@ -76,8 +76,8 @@
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#chart" role="tab" data-toggle="tab">Chart</a></li>
             <li role="presentation"><a href="#skew" role="tab" data-toggle="tab">Skew</a></li>
-            <li role="presentation"><a href="#order-book" role="tab" data-toggle="tab">Order Book</a></li>
             <li role="presentation"><a href="#trade" role="tab" data-toggle="tab">Trade</a></li>
+            <li role="presentation"><a href="#account" role="tab" data-toggle="tab">Account</a></li>
           </ul>
 
           <!-- Tab panes -->
@@ -86,8 +86,8 @@
               <div id="chartdiv" style="width:100%; height:400px;"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="skew"></div>
-            <div role="tabpanel" class="tab-pane" id="order-book"></div>
             <div role="tabpanel" class="tab-pane" id="trade"></div>
+            <div role="tabpanel" class="tab-pane" id="account"></div>
           </div>
         </div>
 
@@ -108,50 +108,290 @@
     <script src="/js/amcharts/amstock.js" type="text/javascript"></script>
     <script src="/js/amcharts/dark.js" type="text/javascript"></script>
     <script type="text/javascript">
-      console.log("creating chart...");
-      AmCharts.theme = AmCharts.themes.dark;
-      var chartData = [
-                {date: new Date(2011, 5, 1, 0, 0, 0, 0), open:"10", high:"11", low:"9", close:"10.5"},
-                {date: new Date(2011, 5, 2, 0, 0, 0, 0), open:"10.6", high:"10.7", low:"10", close:"10.1"},
-                {date: new Date(2011, 5, 3, 0, 0, 0, 0), open:"10.1", high:"10.1", low:"9.5", close:"9.5"},
-                {date: new Date(2011, 5, 4, 0, 0, 0, 0), open:"9.4", high:"9.6", low:"9.4", close:"9.5"},
-                {date: new Date(2011, 5, 5, 0, 0, 0, 0), open:"9.9", high:"10.9", low:"9.8", close:"10.8"},
-                {date: new Date(2011, 5, 6, 0, 0, 0, 0), open:"10.9", high:"11.3", low:"10.9", close:"11"},
-                {date: new Date(2011, 5, 7, 0, 0, 0, 0), open:"11", high:"11.8", low:"10.9", close:"11.5"},
-                {date: new Date(2011, 5, 8, 0, 0, 0, 0), open:"11.6", high:"12.1", low:"11.3", close:"12"},
-                {date: new Date(2011, 5, 9, 0, 0, 0, 0), open:"12", high:"12.4", low:"11.5", close:"11.6"},
-                {date: new Date(2011, 5, 10, 0, 0, 0, 0), open:"11.5", high:"11.5", low:"9.2", close:"9.3"}
-            ];
+      var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "dark",
+    "pathToImages": "/img/amcharts/",
+    "valueAxes": [{
+        "position": "left"
+    }],
+    "graphs": [{
+        "id": "g1",
+        "balloonText": "Open:<b>[[open]]</b><br>Low:<b>[[low]]</b><br>High:<b>[[high]]</b><br>Close:<b>[[close]]</b><br>",
+        "closeField": "close",
+        "fillColors": "#3cdb4c",
+        "highField": "high",
+        "lineColor": "#3cdb4c",
+		"lineAlpha": 1,
+        "lowField": "low",
+		"fillAlphas": 0.9,
+        "negativeFillColors": "#db4c3c",
+        "negativeLineColor": "#db4c3c",
+        "openField": "open",
+        "title": "Price:",
+        "type": "candlestick",
+        "valueField": "close"
+    }],
+    "chartScrollbar": {
+        "graph": "g1",
+        "graphType": "line",
+        "scrollbarHeight": 30
+    },
+    "chartCursor": {
+     "valueLineEnabled":true,
+      "valueLineBalloonEnabled":true
+    },
+    "categoryField": "date",
+    "categoryAxis": {
+        "parseDates": true
+    },
+	exportConfig:{
+	  menuRight: '21px',
+      menuBottom: '31px',
+      menuItems: [{
+      icon: 'http://www.amcharts.com/lib/3/images/export.png',
+      format: 'png'
+      }]
+	},
+    "dataProvider": [
+    {"date":"2014-01-01", "open":"184.84", "high":"184.84", "low":"184.84", "close":"184.84"},
+    {"date":"2014-01-02", "open":"184.59", "high":"184.59", "low":"182.77", "close":"183.2"},
+    {"date":"2014-01-03", "open":"183.32", "high":"183.82", "low":"182.91", "close":"183.14"},
+    {"date":"2014-01-06", "open":"183.23", "high":"183.72", "low":"182.37", "close":"182.68"},
+    {"date":"2014-01-07", "open":"182.87", "high":"184.01", "low":"182.87", "close":"183.79"},
+    {"date":"2014-01-08", "open":"183.79", "high":"184", "low":"183.14", "close":"183.75"},
+    {"date":"2014-01-09", "open":"183.9", "high":"184.32", "low":"183.04", "close":"183.81"},
+    {"date":"2014-01-10", "open":"184.01", "high":"184.32", "low":"183.24", "close":"184.24"},
+    {"date":"2014-01-13", "open":"184.13", "high":"184.35", "low":"181.55", "close":"181.92"},
+    {"date":"2014-01-14", "open":"182.14", "high":"183.93", "low":"182.14", "close":"183.89"},
+    {"date":"2014-01-15", "open":"184.05", "high":"185.08", "low":"184.05", "close":"184.84"},
+    {"date":"2014-01-16", "open":"184.8", "high":"184.8", "low":"184.03", "close":"184.59"},
+    {"date":"2014-01-17", "open":"184.42", "high":"184.6", "low":"183.52", "close":"183.87"},
+    {"date":"2014-01-20", "open":"183.87", "high":"183.87", "low":"183.87", "close":"183.87"},
+    {"date":"2014-01-21", "open":"184.11", "high":"184.93", "low":"183.24", "close":"184.38"},
+    {"date":"2014-01-22", "open":"184.47", "high":"184.69", "low":"184.09", "close":"184.49"},
+    {"date":"2014-01-23", "open":"184.23", "high":"184.23", "low":"182.01", "close":"182.85"},
+    {"date":"2014-01-24", "open":"182.7", "high":"182.7", "low":"179.03", "close":"179.03"},
+    {"date":"2014-01-27", "open":"179.1", "high":"179.6", "low":"177.29", "close":"178.16"},
+    {"date":"2014-01-28", "open":"178.3", "high":"179.39", "low":"177.95", "close":"179.25"},
+    {"date":"2014-01-29", "open":"179.02", "high":"179.02", "low":"177.1", "close":"177.42"},
+    {"date":"2014-01-30", "open":"177.72", "high":"179.88", "low":"177.72", "close":"179.42"},
+    {"date":"2014-01-31", "open":"179.09", "high":"179.39", "low":"177.23", "close":"178.26"},
+    {"date":"2014-02-03", "open":"178.27", "high":"178.48", "low":"173.97", "close":"174.19"},
+    {"date":"2014-02-04", "open":"174.38", "high":"175.87", "low":"174.38", "close":"175.52"},
+    {"date":"2014-02-05", "open":"175.34", "high":"175.58", "low":"173.79", "close":"175.16"},
+    {"date":"2014-02-06", "open":"175.3", "high":"177.41", "low":"175.3", "close":"177.34"},
+    {"date":"2014-02-07", "open":"177.6", "high":"179.8", "low":"177.6", "close":"179.7"},
+    {"date":"2014-02-10", "open":"179.62", "high":"179.99", "low":"179.18", "close":"179.98"},
+    {"date":"2014-02-11", "open":"180.05", "high":"182.35", "low":"180.04", "close":"181.98"},
+    {"date":"2014-02-12", "open":"182.01", "high":"182.66", "low":"181.6", "close":"181.93"},
+    {"date":"2014-02-13", "open":"181.48", "high":"183.03", "low":"180.92", "close":"182.98"},
+    {"date":"2014-02-14", "open":"182.85", "high":"184.17", "low":"182.56", "close":"183.86"},
+    {"date":"2014-02-17", "open":"183.86", "high":"183.86", "low":"183.86", "close":"183.86"},
+    {"date":"2014-02-18", "open":"183.9", "high":"184.29", "low":"183.5", "close":"184.08"},
+    {"date":"2014-02-19", "open":"183.89", "high":"184.75", "low":"182.7", "close":"182.88"},
+    {"date":"2014-02-20", "open":"182.92", "high":"184.28", "low":"182.46", "close":"183.98"},
+    {"date":"2014-02-21", "open":"184.11", "high":"184.61", "low":"183.56", "close":"183.63"},
+    {"date":"2014-02-24", "open":"183.68", "high":"185.87", "low":"183.68", "close":"184.76"},
+    {"date":"2014-02-25", "open":"184.77", "high":"185.29", "low":"184.02", "close":"184.51"},
+    {"date":"2014-02-26", "open":"184.58", "high":"185.27", "low":"184.07", "close":"184.52"},
+    {"date":"2014-02-27", "open":"184.49", "high":"185.45", "low":"184.11", "close":"185.43"},
+    {"date":"2014-02-28", "open":"185.51", "high":"186.79", "low":"184.77", "close":"185.95"},
+    {"date":"2014-03-03", "open":"185.77", "high":"185.77", "low":"183.44", "close":"184.57"},
+    {"date":"2014-03-04", "open":"184.92", "high":"187.62", "low":"184.92", "close":"187.39"},
+    {"date":"2014-03-05", "open":"187.41", "high":"187.65", "low":"187.11", "close":"187.38"},
+    {"date":"2014-03-06", "open":"187.42", "high":"188.19", "low":"187.42", "close":"187.7"},
+    {"date":"2014-03-07", "open":"187.85", "high":"188.35", "low":"187.06", "close":"187.8"},
+    {"date":"2014-03-10", "open":"187.79", "high":"187.79", "low":"186.7", "close":"187.72"},
+    {"date":"2014-03-11", "open":"187.83", "high":"188.24", "low":"186.39", "close":"186.76"},
+    {"date":"2014-03-12", "open":"186.62", "high":"186.84", "low":"185.45", "close":"186.82"},
+    {"date":"2014-03-13", "open":"186.91", "high":"187.44", "low":"184.19", "close":"184.63"},
+    {"date":"2014-03-14", "open":"184.51", "high":"185.24", "low":"183.96", "close":"184.11"},
+    {"date":"2014-03-17", "open":"184.28", "high":"186.23", "low":"184.28", "close":"185.88"},
+    {"date":"2014-03-18", "open":"185.89", "high":"187.38", "low":"185.89", "close":"187.23"},
+    {"date":"2014-03-19", "open":"187.23", "high":"187.41", "low":"185.07", "close":"186.08"},
+    {"date":"2014-03-20", "open":"186.01", "high":"187.35", "low":"185.46", "close":"187.2"},
+    {"date":"2014-03-21", "open":"187.45", "high":"188.4", "low":"186.35", "close":"186.65"},
+    {"date":"2014-03-24", "open":"186.77", "high":"187.33", "low":"184.97", "close":"185.74"},
+    {"date":"2014-03-25", "open":"185.95", "high":"187.19", "low":"185.6", "close":"186.56"},
+    {"date":"2014-03-26", "open":"186.71", "high":"187.59", "low":"185.26", "close":"185.26"},
+    {"date":"2014-03-27", "open":"185.21", "high":"185.56", "low":"184.21", "close":"184.9"},
+    {"date":"2014-03-28", "open":"185.01", "high":"186.66", "low":"185.01", "close":"185.76"},
+    {"date":"2014-03-31", "open":"185.92", "high":"187.52", "low":"185.92", "close":"187.23"},
+    {"date":"2014-04-01", "open":"187.4", "high":"188.58", "low":"187.4", "close":"188.55"},
+    {"date":"2014-04-02", "open":"188.66", "high":"189.32", "low":"188.38", "close":"189.09"},
+    {"date":"2014-04-03", "open":"189.14", "high":"189.38", "low":"188.27", "close":"188.88"},
+    {"date":"2014-04-04", "open":"189.03", "high":"189.73", "low":"186.33", "close":"186.51"},
+    {"date":"2014-04-07", "open":"186.39", "high":"186.4", "low":"184.15", "close":"184.5"},
+    {"date":"2014-04-08", "open":"184.55", "high":"185.5", "low":"183.75", "close":"185.2"},
+    {"date":"2014-04-09", "open":"185.26", "high":"187.24", "low":"185.24", "close":"187.22"},
+    {"date":"2014-04-10", "open":"187.23", "high":"187.25", "low":"183.09", "close":"183.31"},
+    {"date":"2014-04-11", "open":"183.07", "high":"183.51", "low":"181.44", "close":"181.57"},
+    {"date":"2014-04-14", "open":"181.82", "high":"183.42", "low":"181.58", "close":"183.06"},
+    {"date":"2014-04-15", "open":"183.15", "high":"184.4", "low":"181.63", "close":"184.3"},
+    {"date":"2014-04-16", "open":"184.6", "high":"186.23", "low":"184.6", "close":"186.23"},
+    {"date":"2014-04-17", "open":"186.17", "high":"186.96", "low":"185.67", "close":"186.49"},
+    {"date":"2014-04-18", "open":"186.49", "high":"186.49", "low":"186.49", "close":"186.49"},
+    {"date":"2014-04-21", "open":"186.58", "high":"187.19", "low":"186.32", "close":"187.19"},
+    {"date":"2014-04-22", "open":"187.26", "high":"188.49", "low":"187.26", "close":"187.96"},
+    {"date":"2014-04-23", "open":"187.93", "high":"187.98", "low":"187.39", "close":"187.54"},
+    {"date":"2014-04-24", "open":"188.2", "high":"188.41", "low":"187.02", "close":"187.86"},
+    {"date":"2014-04-25", "open":"187.77", "high":"187.77", "low":"185.97", "close":"186.34"},
+    {"date":"2014-04-28", "open":"186.5", "high":"187.7", "low":"185.06", "close":"186.94"},
+    {"date":"2014-04-29", "open":"187.08", "high":"188.06", "low":"187.08", "close":"187.83"},
+    {"date":"2014-04-30", "open":"187.71", "high":"188.52", "low":"187.27", "close":"188.4"},
+    {"date":"2014-05-01", "open":"188.44", "high":"188.86", "low":"187.8", "close":"188.37"},
+    {"date":"2014-05-02", "open":"188.53", "high":"189.13", "low":"187.85", "close":"188.11"},
+    {"date":"2014-05-05", "open":"187.95", "high":"188.55", "low":"186.68", "close":"188.47"},
+    {"date":"2014-05-06", "open":"188.37", "high":"188.37", "low":"186.77", "close":"186.77"},
+    {"date":"2014-05-07", "open":"186.85", "high":"187.88", "low":"186.03", "close":"187.82"},
+    {"date":"2014-05-08", "open":"187.74", "high":"188.91", "low":"187.01", "close":"187.56"},
+    {"date":"2014-05-09", "open":"187.53", "high":"187.86", "low":"186.71", "close":"187.85"},
+    {"date":"2014-05-12", "open":"188", "high":"189.71", "low":"188", "close":"189.67"},
+    {"date":"2014-05-13", "open":"189.68", "high":"190.22", "low":"189.61", "close":"189.75"},
+    {"date":"2014-05-14", "open":"189.71", "high":"189.71", "low":"188.58", "close":"188.85"},
+    {"date":"2014-05-15", "open":"188.82", "high":"188.82", "low":"186.24", "close":"187.08"},
+    {"date":"2014-05-16", "open":"187.12", "high":"187.83", "low":"186.48", "close":"187.79"},
+    {"date":"2014-05-19", "open":"187.67", "high":"188.6", "low":"187.24", "close":"188.51"},
+    {"date":"2014-05-20", "open":"188.49", "high":"188.49", "low":"186.81", "close":"187.28"},
+    {"date":"2014-05-21", "open":"187.33", "high":"188.88", "low":"187.33", "close":"188.8"},
+    {"date":"2014-05-22", "open":"188.82", "high":"189.63", "low":"188.54", "close":"189.25"},
+    {"date":"2014-05-23", "open":"189.33", "high":"190.13", "low":"189.33", "close":"190.05"},
+    {"date":"2014-05-26", "open":"190.05", "high":"190.05", "low":"190.05", "close":"190.05"},
+    {"date":"2014-05-27", "open":"190.2", "high":"191.23", "low":"190.2", "close":"191.19"},
+    {"date":"2014-05-28", "open":"191.18", "high":"191.45", "low":"190.73", "close":"190.98"},
+    {"date":"2014-05-29", "open":"191.06", "high":"192", "low":"190.98", "close":"192"},
+    {"date":"2014-05-30", "open":"192.03", "high":"192.4", "low":"191.66", "close":"192.36"},
+    {"date":"2014-06-02", "open":"192.39", "high":"192.59", "low":"191.6", "close":"192.5"},
+    {"date":"2014-06-03", "open":"192.31", "high":"192.51", "low":"191.88", "close":"192.42"},
+    {"date":"2014-06-04", "open":"192.31", "high":"192.86", "low":"191.86", "close":"192.79"},
+    {"date":"2014-06-05", "open":"192.85", "high":"194.17", "low":"192.29", "close":"194.05"},
+    {"date":"2014-06-06", "open":"194.24", "high":"194.94", "low":"194.24", "close":"194.94"},
+    {"date":"2014-06-09", "open":"194.9", "high":"195.56", "low":"194.72", "close":"195.13"},
+    {"date":"2014-06-10", "open":"195.03", "high":"195.09", "low":"194.46", "close":"195.08"},
+    {"date":"2014-06-11", "open":"194.94", "high":"194.94", "low":"194.01", "close":"194.39"},
+    {"date":"2014-06-12", "open":"194.33", "high":"194.33", "low":"192.58", "close":"193.01"},
+    {"date":"2014-06-13", "open":"193.08", "high":"193.73", "low":"192.77", "close":"193.62"},
+    {"date":"2014-06-16", "open":"193.48", "high":"194.12", "low":"193.09", "close":"193.78"},
+    {"date":"2014-06-17", "open":"193.72", "high":"194.37", "low":"193.36", "close":"194.2"},
+    {"date":"2014-06-18", "open":"194.27", "high":"195.77", "low":"193.93", "close":"195.7"},
+    {"date":"2014-06-19", "open":"195.75", "high":"195.99", "low":"195.23", "close":"195.95"},
+    {"date":"2014-06-20", "open":"196.05", "high":"196.39", "low":"195.92", "close":"196.29"},
+    {"date":"2014-06-23", "open":"196.29", "high":"196.37", "low":"195.89", "close":"196.26"},
+    {"date":"2014-06-24", "open":"196.2", "high":"196.82", "low":"194.83", "close":"195"},
+    {"date":"2014-06-25", "open":"194.93", "high":"196.08", "low":"194.75", "close":"195.95"},
+    {"date":"2014-06-26", "open":"195.99", "high":"195.99", "low":"194.47", "close":"195.72"},
+    {"date":"2014-06-27", "open":"195.66", "high":"196.15", "low":"195.22", "close":"196.1"},
+    {"date":"2014-06-30", "open":"196.08", "high":"196.42", "low":"195.82", "close":"196.02"},
+    {"date":"2014-07-01", "open":"196.23", "high":"197.86", "low":"196.23", "close":"197.33"},
+    {"date":"2014-07-02", "open":"197.31", "high":"197.67", "low":"197.26", "close":"197.46"},
+    {"date":"2014-07-03", "open":"197.59", "high":"198.56", "low":"197.59", "close":"198.54"},
+    {"date":"2014-07-04", "open":"198.54", "high":"198.54", "low":"198.54", "close":"198.54"},
+    {"date":"2014-07-07", "open":"198.42", "high":"198.42", "low":"197.49", "close":"197.77"},
+    {"date":"2014-07-08", "open":"197.64", "high":"197.64", "low":"195.95", "close":"196.37"},
+    {"date":"2014-07-09", "open":"196.51", "high":"197.42", "low":"196.51", "close":"197.28"},
+    {"date":"2014-07-10", "open":"196.67", "high":"196.98", "low":"195.29", "close":"196.47"},
+    {"date":"2014-07-11", "open":"196.58", "high":"196.87", "low":"195.96", "close":"196.76"},
+    {"date":"2014-07-14", "open":"196.99", "high":"197.99", "low":"196.99", "close":"197.71"},
+    {"date":"2014-07-15", "open":"197.74", "high":"198.25", "low":"196.53", "close":"197.33"},
+    {"date":"2014-07-16", "open":"197.64", "high":"198.39", "low":"197.57", "close":"198.16"},
+    {"date":"2014-07-17", "open":"197.98", "high":"198.18", "low":"195.56", "close":"195.81"},
+    {"date":"2014-07-18", "open":"196.15", "high":"197.99", "low":"196.08", "close":"197.82"},
+    {"date":"2014-07-21", "open":"197.69", "high":"197.69", "low":"196.58", "close":"197.36"},
+    {"date":"2014-07-22", "open":"197.57", "high":"198.62", "low":"197.57", "close":"198.35"},
+    {"date":"2014-07-23", "open":"198.53", "high":"198.92", "low":"198.24", "close":"198.7"},
+    {"date":"2014-07-24", "open":"198.81", "high":"199.14", "low":"198.58", "close":"198.8"},
+    {"date":"2014-07-25", "open":"198.46", "high":"198.46", "low":"197.44", "close":"197.83"},
+    {"date":"2014-07-28", "open":"197.83", "high":"198.15", "low":"196.73", "close":"197.89"},
+    {"date":"2014-07-29", "open":"198", "high":"198.49", "low":"197", "close":"197"},
+    {"date":"2014-07-30", "open":"197.32", "high":"197.89", "low":"196.24", "close":"197.01"},
+    {"date":"2014-07-31", "open":"196.51", "high":"196.51", "low":"193.07", "close":"193.07"},
+    {"date":"2014-08-01", "open":"192.98", "high":"193.7", "low":"191.64", "close":"192.52"},
+    {"date":"2014-08-04", "open":"192.66", "high":"194.29", "low":"192.12", "close":"193.9"},
+    {"date":"2014-08-05", "open":"193.63", "high":"193.63", "low":"191.38", "close":"192.02"},
+    {"date":"2014-08-06", "open":"191.73", "high":"192.79", "low":"191.15", "close":"192.02"},
+    {"date":"2014-08-07", "open":"192.3", "high":"192.89", "low":"190.48", "close":"190.96"},
+    {"date":"2014-08-08", "open":"191.04", "high":"193.24", "low":"190.9", "close":"193.16"},
+    {"date":"2014-08-11", "open":"193.34", "high":"194.49", "low":"193.34", "close":"193.69"},
+    {"date":"2014-08-12", "open":"193.57", "high":"193.97", "low":"192.83", "close":"193.38"},
+    {"date":"2014-08-13", "open":"193.56", "high":"194.84", "low":"193.56", "close":"194.67"},
+    {"date":"2014-08-14", "open":"194.74", "high":"195.52", "low":"194.74", "close":"195.52"},
+    {"date":"2014-08-15", "open":"195.89", "high":"196.4", "low":"194.15", "close":"195.51"},
+    {"date":"2014-08-18", "open":"195.84", "high":"197.2", "low":"195.84", "close":"197.17"},
+    {"date":"2014-08-19", "open":"197.27", "high":"198.26", "low":"197.27", "close":"198.16"},
+    {"date":"2014-08-20", "open":"198.05", "high":"198.86", "low":"197.77", "close":"198.65"},
+    {"date":"2014-08-21", "open":"198.68", "high":"199.48", "low":"198.68", "close":"199.24"},
+    {"date":"2014-08-22", "open":"199.26", "high":"199.35", "low":"198.48", "close":"198.84"},
+    {"date":"2014-08-25", "open":"199.17", "high":"200.2", "low":"199.17", "close":"199.79"},
+    {"date":"2014-08-26", "open":"199.86", "high":"200.5", "low":"199.86", "close":"200"},
+    {"date":"2014-08-27", "open":"200.05", "high":"200.21", "low":"199.62", "close":"200.01"},
+    {"date":"2014-08-28", "open":"199.74", "high":"199.86", "low":"199.05", "close":"199.67"},
+    {"date":"2014-08-29", "open":"199.85", "high":"200.34", "low":"199.47", "close":"200.34"},
+    {"date":"2014-09-01", "open":"200.34", "high":"200.34", "low":"200.34", "close":"200.34"},
+    {"date":"2014-09-02", "open":"200.41", "high":"200.61", "low":"199.49", "close":"200.23"},
+    {"date":"2014-09-03", "open":"200.36", "high":"200.93", "low":"199.81", "close":"200.07"},
+    {"date":"2014-09-04", "open":"200.17", "high":"201.12", "low":"199.25", "close":"199.77"},
+    {"date":"2014-09-05", "open":"199.8", "high":"200.77", "low":"199.01", "close":"200.77"},
+    {"date":"2014-09-08", "open":"200.72", "high":"200.72", "low":"199.56", "close":"200.15"},
+    {"date":"2014-09-09", "open":"200.07", "high":"200.1", "low":"198.46", "close":"198.84"},
+    {"date":"2014-09-10", "open":"198.84", "high":"199.67", "low":"198.3", "close":"199.57"},
+    {"date":"2014-09-11", "open":"199.29", "high":"199.77", "low":"198.59", "close":"199.75"},
+    {"date":"2014-09-12", "open":"199.67", "high":"199.67", "low":"198.03", "close":"198.55"},
+    {"date":"2014-09-15", "open":"198.6", "high":"198.72", "low":"197.85", "close":"198.41"},
+    {"date":"2014-09-16", "open":"198.19", "high":"200.23", "low":"197.98", "close":"199.9"},
+    {"date":"2014-09-17", "open":"199.93", "high":"201.07", "low":"199.33", "close":"200.16"},
+    {"date":"2014-09-18", "open":"200.31", "high":"201.23", "low":"200.31", "close":"201.14"},
+    {"date":"2014-09-19", "open":"201.27", "high":"201.93", "low":"200.66", "close":"201.04"},
+    {"date":"2014-09-22", "open":"200.91", "high":"200.91", "low":"199.1", "close":"199.43"},
+    {"date":"2014-09-23", "open":"199.28", "high":"199.53", "low":"198.28", "close":"198.28"},
+    {"date":"2014-09-24", "open":"198.33", "high":"199.98", "low":"197.91", "close":"199.83"},
+    {"date":"2014-09-25", "open":"199.73", "high":"199.73", "low":"196.6", "close":"196.6"},
+    {"date":"2014-09-26", "open":"196.62", "high":"198.64", "low":"196.62", "close":"198.29"},
+    {"date":"2014-09-29", "open":"197.9", "high":"198.13", "low":"196.43", "close":"197.78"},
+    {"date":"2014-09-30", "open":"197.82", "high":"198.52", "low":"196.9", "close":"197.23"},
+    {"date":"2014-10-01", "open":"197.14", "high":"197.14", "low":"194.17", "close":"194.62"},
+    {"date":"2014-10-02", "open":"194.58", "high":"195.23", "low":"192.64", "close":"194.62"},
+    {"date":"2014-10-03", "open":"194.81", "high":"197.12", "low":"194.81", "close":"196.79"},
+    {"date":"2014-10-06", "open":"197", "high":"197.78", "low":"195.84", "close":"196.48"},
+    {"date":"2014-10-07", "open":"196.24", "high":"196.24", "low":"193.49", "close":"193.51"},
+    {"date":"2014-10-08", "open":"193.56", "high":"197.04", "low":"192.53", "close":"196.89"},
+    {"date":"2014-10-09", "open":"196.77", "high":"196.77", "low":"192.76", "close":"192.82"},
+    {"date":"2014-10-10", "open":"192.56", "high":"193.68", "low":"190.61", "close":"190.61"},
+    {"date":"2014-10-13", "open":"190.57", "high":"191.21", "low":"187.41", "close":"187.47"},
+    {"date":"2014-10-14", "open":"187.71", "high":"189.87", "low":"187.18", "close":"187.77"},
+    {"date":"2014-10-15", "open":"187.42", "high":"187.42", "low":"182.16", "close":"186.25"},
+    {"date":"2014-10-16", "open":"185.6", "high":"187.6", "low":"183.5", "close":"186.28"},
+    {"date":"2014-10-17", "open":"186.49", "high":"189.82", "low":"186.49", "close":"188.68"},
+    {"date":"2014-10-20", "open":"188.56", "high":"190.5", "low":"188.23", "close":"190.4"},
+    {"date":"2014-10-21", "open":"190.94", "high":"194.25", "low":"190.94", "close":"194.13"},
+    {"date":"2014-10-22", "open":"194.13", "high":"194.93", "low":"192.68", "close":"192.71"},
+    {"date":"2014-10-23", "open":"193.1", "high":"196.2", "low":"193.1", "close":"195.08"},
+    {"date":"2014-10-24", "open":"195.16", "high":"196.53", "low":"194.63", "close":"196.46"},
+    {"date":"2014-10-27", "open":"196.3", "high":"196.46", "low":"195.15", "close":"196.16"},
+    {"date":"2014-10-28", "open":"196.41", "high":"198.51", "low":"196.41", "close":"198.51"},
+    {"date":"2014-10-29", "open":"198.33", "high":"199.14", "low":"196.9", "close":"198.23"},
+    {"date":"2014-10-30", "open":"197.95", "high":"199.94", "low":"197.48", "close":"199.47"},
+    {"date":"2014-10-31", "open":"200.12", "high":"201.82", "low":"200.12", "close":"201.81"},
+    {"date":"2014-11-03", "open":"201.82", "high":"202.45", "low":"201.37", "close":"201.78"},
+    {"date":"2014-11-04", "open":"201.58", "high":"201.59", "low":"200.1", "close":"201.21"},
+    {"date":"2014-11-05", "open":"201.53", "high":"202.38", "low":"201.49", "close":"202.36"},
+    {"date":"2014-11-06", "open":"202.33", "high":"203.16", "low":"201.7", "close":"203.12"},
+    {"date":"2014-11-07", "open":"203.24", "high":"203.43", "low":"202.54", "close":"203.19"},
+    {"date":"2014-11-10", "open":"203.2", "high":"203.87", "low":"203.02", "close":"203.83"},
+    {"date":"2014-11-11", "open":"203.82", "high":"204.13", "low":"203.53", "close":"203.97"}
+    ]
+});
 
-            AmCharts.ready(function() {
-                var chart = new AmCharts.AmStockChart();
-                chart.pathToImages = "/img/amcharts/";
+console.log(chart.dataProvider);
 
-                var dataSet = new AmCharts.DataSet();
-                dataSet.dataProvider = chartData;
-                dataSet.fieldMappings = [{fromField:"open", toField:"openField"}];
-                dataSet.fieldMappings = [{fromField:"high", toField:"highField"}];
-                dataSet.fieldMappings = [{fromField:"low", toField:"lowField"}];
-                dataSet.fieldMappings = [{fromField:"close", toField:"closeField"}];
-                dataSet.categoryField = "date";
-                chart.dataSets = [dataSet];
+chart.addListener("rendered", zoomChart);
+zoomChart();
 
-                var stockPanel = new AmCharts.StockPanel();
-                chart.panels = [stockPanel];
-
-                var panelsSettings = new AmCharts.PanelsSettings();
-                panelsSettings.startDuration = 1;
-                chart.panelsSettings = panelsSettings;
-
-                var graph = new AmCharts.StockGraph();
-                graph.valueField = "close";
-                graph.type = "candlestick";
-                graph.fillAlphas = 1;
-                graph.title = "MyGraph";
-                stockPanel.addStockGraph(graph);
-
-                chart.write("chartdiv");
-            });
+// this method is called when chart is first inited as we listen for "dataUpdated" event
+function zoomChart() {
+    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+    chart.zoomToIndexes(chart.dataProvider.length - 10, chart.dataProvider.length - 1);
+}
     </script>
   </body>
 </html>
