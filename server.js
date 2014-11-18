@@ -52,10 +52,17 @@ app.route("/getOptionChain/:symbol/:expiration")
         }
         tkStream.startStream(streamSymbols, function(data)
         {
-          data = JSON.parse(data);
-          if(data["quote"] !== undefined)
+          try
           {
-            io.emit("quote", data);
+            data = JSON.parse(data);
+            if(data["quote"] !== undefined)
+            {
+              io.emit("quote", data);
+            }
+          }
+          catch(ex)
+          {
+            console.log(ex + ": failed to parse json: " + data);
           }
         });
       }
